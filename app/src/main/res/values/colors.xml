@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="status_bar_color">#24678c</color>
+    <color name="background_color">#efefef</color>
+    <color name="heading_text_color">#333333</color>
+    <color name="text_color">#777777</color>
+    <color name="read_more_text_color">#428bca</color>
+    <color name="paragraph_color">#666666</color>
+    <color name="menu_bar_color">#2486ac</color>
+
+</resources>

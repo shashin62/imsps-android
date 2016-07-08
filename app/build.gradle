@@ -1,0 +1,113 @@
+apply plugin: 'com.android.application'
+
+//added for android annotations
+apply plugin: 'android-apt'
+def AAVersion = '3.3.2'
+
+//buildscript added for android annotations
+buildscript {
+    repositories {
+//        maven{ url "http://jzaccone.github.io/SlidingMenu-aar" }
+        mavenCentral()
+    }
+    dependencies {
+        // the latest version of the android-apt plugin
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.6'
+    }
+}
+
+//apt added for android annotations
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0].processResources.manifestFile
+        // if you have multiple outputs (when using splits), you may want to have other index than 0
+
+        resourcePackageName 'com.proschoolonline.mob'
+
+        // If you're using Android NBS flavors you should use the following line instead of hard-coded packageName
+        // resourcePackageName android.defaultConfig.packageName
+
+        // You can set optional annotation processing options here, like these commented options:
+        // logLevel 'INFO'
+        // logFile '/var/log/aa.log'
+    }
+}
+
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.proschoolonline.mob"
+        multiDexEnabled true
+        minSdkVersion 16
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/notice.txt'
+    }
+
+    productFlavors {
+        def STRING = "String"
+        def APIURL = "apiUrl"
+
+        DEV {
+            manifestPlaceholders =
+                    [
+                           // launcherIcon: "@drawable/app_icon",
+                            appPackage: "com.proschoolonline.mob",
+                            appName   : "IMS Proschool"
+                    ]
+            applicationId = "com.proschoolonline.mob.DEV"
+            buildConfigField STRING, APIURL, "\"http://www.proschoolonline.com\""
+        }
+        UAT {
+            manifestPlaceholders =
+                    [
+                           // launcherIcon: "@drawable/app_icon",
+                            appPackage: "com.proschoolonline.mob",
+                            appName   : "IMS Proschool"
+                    ]
+            applicationId = "com.proschoolonline.mob"
+            buildConfigField STRING, APIURL, "\"http://www.proschoolonline.com\""
+
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    //added for android annotations
+    apt "org.androidannotations:androidannotations:$AAVersion"
+    compile "org.androidannotations:androidannotations-api:$AAVersion"
+
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
+
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    compile 'commons-io:commons-io:2.4'
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.0'
+    compile 'com.fasterxml.jackson.core:jackson-core:+'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:+'
+    compile 'com.fasterxml.jackson.core:jackson-databind:+'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.android.support:design:22.2.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.android.support:support-v4:22.2.1'
+    compile 'com.google.code.gson:gson:2.6.2'
+
+}

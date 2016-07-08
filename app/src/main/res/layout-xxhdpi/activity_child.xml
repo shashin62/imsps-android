@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customfont="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:orientation="vertical"
+    android:padding="13dp">
+
+    <ImageView
+        android:id="@+id/imvNews"
+        android:layout_width="130dp"
+        android:layout_height="80dp"
+        android:scaleType="fitXY" />
+
+    <com.proschoolonline.components.AppTextView
+        android:id="@+id/tvNewsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@+id/imvDelete"
+        android:layout_toRightOf="@+id/imvNews"
+        android:textColor="@color/heading_text_color"
+        android:textSize="15sp"
+        customfont:fontName="OpenSans-Regular.ttf" />
+
+    <com.proschoolonline.components.ExpandableTextView
+        android:id="@+id/tvNewsDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNewsTitle"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@+id/imvDelete"
+        android:layout_toRightOf="@+id/imvNews"
+        android:textColor="@color/text_color"
+        android:textSize="11sp"
+        customfont:fontName="OpenSans-Regular.ttf" />
+
+    <ImageView
+        android:id="@+id/imvDelete"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/delete_icon"
+        android:visibility="gone"/>
+</RelativeLayout>
