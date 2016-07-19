@@ -28,6 +28,18 @@
             android:background="@android:color/white"
             android:orientation="vertical">
 
+            <com.proschoolonline.components.AppTextView
+                android:id="@+id/tvSorry"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dip"
+                android:gravity="center"
+                android:text="@string/sorry_text"
+                android:textColor="@android:color/black"
+                android:textSize="17dip"
+                android:visibility="gone"
+                app:fontName="OpenSans-Semibold.ttf" />
+
             <ListView
                 android:id="@+id/lvNews"
                 android:layout_width="match_parent"

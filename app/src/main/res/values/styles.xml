@@ -28,6 +28,10 @@
         <item name="spinBars">true</item>
         <item name="color">@android:color/white</item>
     </style>
+    <style name="Theme.CustomDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/filled_box</item>
+    </style>
+
 
     <declare-styleable name="ExpandableTextView">
         <attr name="trimLength" format="integer"/>

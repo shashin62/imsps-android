@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.support.v4.view.MenuItemCompat;
@@ -29,11 +30,11 @@ import com.proschoolonline.application.DataFetchApplication;
 import com.proschoolonline.application.SharedInstance;
 import com.proschoolonline.application.SharedPreference;
 import com.proschoolonline.components.AppTextView;
+import com.proschoolonline.components.NestedExpandableListView;
 import com.proschoolonline.mob.R;
 import com.proschoolonline.model.CategoriesData;
 import com.proschoolonline.model.NewsData;
 import com.proschoolonline.utilities.AlarmReceiver_;
-import com.proschoolonline.components.NestedExpandableListView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -72,6 +73,9 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @ViewById(R.id.textBookmark)
     AppTextView tvBookmark;
+
+    @ViewById(R.id.tvSorry)
+    AppTextView tvSorry;
 
     @ViewById(R.id.lvNews)
     ListView lvNews;
@@ -304,6 +308,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     void publishResultCategory(List<CategoriesData> newsDatas, List<NewsData> newsData){
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
+            checkFirstRun();
         }
         if (newsDatas != null){
             SharedInstance.getInstance().setCategoriesDataList(newsDatas);
@@ -312,6 +317,22 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
             loadData();
         }
 
+    }
+
+    void checkFirstRun() {
+        SharedPreferences settings = getSharedPreferences("PREFERENCE", MODE_PRIVATE);
+        if (settings.getBoolean("isFirstRun", true)) {
+            displayDialog();
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("isFirstRun", false);
+            editor.commit();
+        }
+    }
+
+    @UiThread
+    void displayDialog() {
+        Intent intent = new Intent(this, FormAlertActivity_.class);
+        startActivity(intent);
     }
 
     @UiThread
@@ -335,8 +356,15 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
             progressDialog.dismiss();
         }
         if (newsData != null){
-            newsListAdapterAll = new NewsListAdapter(context,newsData,FromMainPage);
-            lvNews.setAdapter(newsListAdapterAll);
+            if (newsData.size() > 0) {
+                tvSorry.setVisibility(View.GONE);
+                newsListAdapterAll = new NewsListAdapter(context, newsData, FromMainPage);
+                lvNews.setAdapter(newsListAdapterAll);
+            }else {
+                tvSorry.setVisibility(View.VISIBLE);
+            }
+        }else{
+            tvSorry.setVisibility(View.VISIBLE);
         }
 
     }
@@ -423,8 +451,13 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                         }
                     }
                 }
-                newsListAdapterAll = new NewsListAdapter(context, newsFilterList, FromMainPage);
-                lvNews.setAdapter(newsListAdapterAll);
+                if (newsFilterList.size() > 0) {
+                    tvSorry.setVisibility(View.GONE);
+                    newsListAdapterAll = new NewsListAdapter(context, newsFilterList, FromMainPage);
+                    lvNews.setAdapter(newsListAdapterAll);
+                }else {
+                    tvSorry.setVisibility(View.VISIBLE);
+                }
             }
 
             drawerLayout.closeDrawer(left_drawer);
@@ -449,6 +482,11 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     @Click(R.id.textHome)
     void onClickHome(View v){
         setTitle(getString(R.string.latest_posts));
+        if (SharedInstance.getInstance().getNewsDataList().size() > 0) {
+            tvSorry.setVisibility(View.GONE);
+        }else {
+            tvSorry.setVisibility(View.VISIBLE);
+        }
         newsListAdapterAll = new NewsListAdapter(context,SharedInstance.getInstance().getNewsDataList(),FromMainPage);
         lvNews.setAdapter(newsListAdapterAll);
         drawerLayout.closeDrawer(left_drawer);
@@ -476,6 +514,11 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
 
         SharedInstance.getInstance().setBookmarkedList(newsDataListBook);
         setTitle(getString(R.string.bookmark));
+        if (SharedInstance.getInstance().getBookmarkedList().size() > 0) {
+            tvSorry.setVisibility(View.GONE);
+        }else {
+            tvSorry.setVisibility(View.VISIBLE);
+        }
         newsListAdapterAll = new NewsListAdapter(context,SharedInstance.getInstance().getBookmarkedList(),FromBookmarkPage);
         lvNews.setAdapter(newsListAdapterAll);
         drawerLayout.closeDrawer(left_drawer);
@@ -500,8 +543,13 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                         }
                     }
                 }
-                newsListAdapterAll = new NewsListAdapter(context, newsFilterList, FromMainPage);
-                lvNews.setAdapter(newsListAdapterAll);
+                if (newsFilterList.size() > 0) {
+                    tvSorry.setVisibility(View.GONE);
+                    newsListAdapterAll = new NewsListAdapter(context, newsFilterList, FromMainPage);
+                    lvNews.setAdapter(newsListAdapterAll);
+                }else {
+                    tvSorry.setVisibility(View.VISIBLE);
+                }
             }
 
             expandableListView.setItemChecked(childPosition, true);
