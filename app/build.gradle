@@ -63,6 +63,7 @@ android {
     productFlavors {
         def STRING = "String"
         def APIURL = "apiUrl"
+        def FORMURL = "formUrl"
 
         DEV {
             manifestPlaceholders =
@@ -73,6 +74,8 @@ android {
                     ]
             applicationId = "com.proschoolonline.mob.DEV"
             buildConfigField STRING, APIURL, "\"http://www.proschoolonline.com\""
+            buildConfigField STRING, FORMURL, "\"https://web.mxradon.com/t/FormTracker.aspx\""
+
         }
         UAT {
             manifestPlaceholders =
@@ -83,6 +86,7 @@ android {
                     ]
             applicationId = "com.proschoolonline.mob"
             buildConfigField STRING, APIURL, "\"http://www.proschoolonline.com\""
+            buildConfigField STRING, FORMURL, "\"https://web.mxradon.com/t/FormTracker.aspx\""
 
         }
     }
@@ -109,5 +113,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:support-v4:22.2.1'
     compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.mobsandgeeks:android-saripaar:2.0.3'
 
 }

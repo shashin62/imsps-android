@@ -1,11 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:customfont="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
-    <WebView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/menu_bar_color"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingLeft="7dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp"
+        app:theme="@style/ToolbarTheme"></android.support.v7.widget.Toolbar>
+
+    <!--<WebView
         android:id="@+id/wvForm"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColorHint="@color/hint_register">
+
+        <com.proschoolonline.components.AppEditText
+            android:id="@+id/edtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/firstname"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="13sp"
+            android:backgroundTint="@color/hint_register"
+            customfont:fontName="OpenSans-Regular.ttf" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRegister"
+        android:layout_centerHorizontal="true"
+        android:textColorHint="@color/hint_register">
+
+        <com.proschoolonline.components.AppEditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="13sp"
+            android:backgroundTint="@color/hint_register"
+            customfont:fontName="OpenSans-Regular.ttf" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColorHint="@color/hint_register">
+
+        <com.proschoolonline.components.AppEditText
+            android:id="@+id/edtPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="0123456789"
+            android:hint="@string/phone"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="13sp"
+            android:backgroundTint="@color/hint_register"
+            customfont:fontName="OpenSans-Regular.ttf" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColorHint="@color/hint_register">
+
+        <com.proschoolonline.components.AppEditText
+            android:id="@+id/edtCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/city"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="13sp"
+            android:backgroundTint="@color/hint_register"
+            customfont:fontName="OpenSans-Regular.ttf" />
+    </android.support.design.widget.TextInputLayout>
+
+    <com.proschoolonline.components.AppButton
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/submit"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        customfont:fontName="OpenSans-Semibold.ttf" />
 </LinearLayout>

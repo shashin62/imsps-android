@@ -11,5 +11,5 @@
     <color name="read_more_text_color">#428bca</color>
     <color name="paragraph_color">#666666</color>
     <color name="menu_bar_color">#2486ac</color>
-
+    <color name="hint_register">#42000000</color>
 </resources>

@@ -41,8 +41,10 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.proschoolonline.view.FormAlertActivity_"
-            android:label=" "
-            android:theme="@style/Theme.CustomDialog" >
+            android:icon="@mipmap/app_icon"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">>
         </activity>
     </application>
 
