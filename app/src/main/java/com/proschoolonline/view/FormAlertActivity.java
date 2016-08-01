@@ -30,17 +30,15 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -182,12 +180,19 @@ public class FormAlertActivity extends AppCompatActivity implements Validator.Va
 		postDataParams.put("MXHPageTitle","User Information");
 		postDataParams.put("MXHOutputMessagePosition","0");
 		postDataParams.put("MXHIsExternallyUsed","1");
-		String result = performPostCall(postDataParams);
-		dismissProgressDialog(result);
+		//String result = performPostCall(postDataParams);
+		try {
+			doSubmit(BuildConfig.formUrl,postDataParams);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			dismissProgressDialog();
+		}
+
 	}
 
 	@UiThread
-	void dismissProgressDialog(String result) {
+	void dismissProgressDialog() {
 		if (progressDialog != null && progressDialog.isShowing()) {
 			progressDialog.dismiss();
 		}
@@ -195,82 +200,47 @@ public class FormAlertActivity extends AppCompatActivity implements Validator.Va
 		finish();
 	}
 
-	public String performPostCall(HashMap<String, String> postDataParams) {
+	public void doSubmit(String url, HashMap<String, String> data) throws IOException {
+		URL siteUrl = new URL(url);
+		HttpsURLConnection conn = (HttpsURLConnection) siteUrl.openConnection();
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("Content-Type",
+				"application/x-www-form-urlencoded");
+		conn.setUseCaches (true);
+		conn.setDoOutput(true);
+		conn.setDoInput(true);
 
-		URL url;
+		DataOutputStream out = new DataOutputStream(conn.getOutputStream());
+
+		Set keys = data.keySet();
+		Iterator keyIter = keys.iterator();
+		String content = "";
+		for(int i=0; keyIter.hasNext(); i++) {
+			Object key = keyIter.next();
+			if(i!=0) {
+				content += "&";
+			}
+			content += key + "=" + URLEncoder.encode(data.get(key), "UTF-8");
+		}
+		Log.v("FINALRESULT", content+"<<----");
+		out.writeBytes(content);
+		out.flush();
+		out.close();
+		int responseCode=conn.getResponseCode();
 		String response = "";
-		try {
-			url = new URL(BuildConfig.formUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setUseCaches(false);
-			//conn.setRequestMethod("POST");
-			conn.setDoInput(true);
-			conn.setDoOutput(true);
-			conn.setRequestProperty("Content-Type", "multipart/form-data");
-			OutputStream os = conn.getOutputStream();
-			BufferedWriter writer = new BufferedWriter(
-					new OutputStreamWriter(os, "UTF-8"));
-			String data = getPostDataString(postDataParams);
-			Log.v("FINALRESULT", data+"<<----");
-			writer.write(data);
+		if (responseCode == HttpsURLConnection.HTTP_OK) {
 
-			writer.flush();
-			writer.close();
-			os.close();
-			int responseCode=conn.getResponseCode();
-			if (responseCode == HttpsURLConnection.HTTP_OK) {
-				Log.v("FINALRESULT","<<---HTTP_OK---->>");
-				String line;
-				BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
-				while ((line=br.readLine()) != null) {
-					response+=line;
-				}
+			String line;
+			BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			while ((line=br.readLine()) != null) {
+				response+=line;
 			}
-			else {
-				Log.v("FINALRESULT","<<---HTTP_ERROR---->>");
-				response="";
-
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			Log.v("FINALRESULT","<<---HTTP_OK---->>"+response);
 		}
-
-		return response;
+		else {
+			Log.v("FINALRESULT","<<---HTTP_ERROR---->>");
+		}
 	}
-
-	public String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
-		StringBuilder result = new StringBuilder();
-		boolean first = true;
-		for(Map.Entry<String, String> entry : params.entrySet()){
-			if (first)
-				first = false;
-			else
-				result.append("&");
-
-			result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-			result.append("=");
-			result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-		}
-
-		return result.toString();
-	}
-
-	/*public static String StreamToString(InputStream in) throws IOException {
-		if(in == null) {
-			return "";
-		}
-		Writer writer = new StringWriter();
-		char[] buffer = new char[1024];
-		try {
-			Reader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-			int n;
-			while ((n = reader.read(buffer)) != -1) {
-				writer.write(buffer, 0, n);
-			}
-		} finally {
-		}
-		return writer.toString();
-	}*/
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
