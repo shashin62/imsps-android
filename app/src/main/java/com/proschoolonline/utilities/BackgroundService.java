@@ -17,7 +17,10 @@ import org.androidannotations.annotations.UiThread;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @EService
 public class BackgroundService extends Service {
@@ -51,8 +54,30 @@ public class BackgroundService extends Service {
     @UiThread
     void publishResult(List<NewsData> newsDatas){
         if (newsDatas != null){
-            for (NewsData newsData : newsDatas)
+
+            Iterator<NewsData> itr = newsDatas.iterator();
+            while (itr.hasNext()) {
+                NewsData newsData = itr.next();
+                if (!newsData.getAcf().toString().contains("visible_in_app=Yes")){
+                    itr.remove();
+                }else{
+                    if (newsData.getAcf().toString().contains("counter=")){
+                        Matcher m = Pattern.compile(
+                                Pattern.quote("counter=")
+                                        + "(.*?)"
+                                        + Pattern.quote("}")
+                        ).matcher(newsData.getAcf().toString());
+                        while(m.find()){
+                            String match = m.group(1);
+                            newsData.setCounter(match);
+                        }
+                    }
+                }
                 Log.v("Inside Service","publishResult--"+newsData.getTitle().getRendered()+"-----");
+                Log.v("Inside Service","acf--"+newsData.getAcf().toString()+"-----");
+                Log.v("Inside Service","Counter--"+newsData.getCounter());
+            }
+
             if (SharedInstance.getInstance().getNewsDataList() != null && SharedInstance.getInstance().getNewsDataList().size() > 0){
                 for (NewsData newsDataOld : SharedInstance.getInstance().getNewsDataList()){
                     for (NewsData newsDataNew : newsDatas){

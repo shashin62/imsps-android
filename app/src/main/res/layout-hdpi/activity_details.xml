@@ -127,6 +127,54 @@
                      customfont:fontName="OpenSans-Regular.ttf" />-->
 
             </LinearLayout>
+            <com.proschoolonline.components.AppTextView
+                android:id="@+id/tvPeopleRead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="7dp"
+                android:textColor="@color/heading_text_color"
+                android:textSize="11sp"
+                android:visibility="gone"
+                customfont:fontName="OpenSans-Semibold.ttf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="7dp"
+                android:paddingTop="7dp">
+
+                <ImageView
+                    android:id="@+id/imvFacebook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_facebook" />
+
+                <ImageView
+                    android:id="@+id/imvTwitter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_twitter" />
+
+                <ImageView
+                    android:id="@+id/imvWhatsapp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_whatsapp" />
+
+            </LinearLayout>
             <WebView
                 android:id="@+id/webview"
                 android:layout_width="match_parent"

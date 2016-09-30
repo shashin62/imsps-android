@@ -38,7 +38,8 @@ import java.util.Map;
     "format",
     "categories",
     "tags",
-    "_links"
+    "_links",
+    "acf"
 })
 public class NewsData implements Serializable {
 
@@ -84,8 +85,12 @@ public class NewsData implements Serializable {
     private List<Object> tags = new ArrayList<Object>();
     @JsonProperty("_links")
     private Links links;
+    @JsonProperty("acf")
+    private Object acf;
 
     boolean bookmarked;
+
+    String counter;
 
     public boolean isBookmarked() {
         return bookmarked;
@@ -516,6 +521,24 @@ public class NewsData implements Serializable {
     @JsonProperty("_links")
     public void setLinks(Links links) {
         this.links = links;
+    }
+
+    @JsonProperty("acf")
+    public Object getAcf() {
+        return acf;
+    }
+
+    @JsonProperty("acf")
+    public void setAcf(Object acf) {
+        this.acf = acf;
+    }
+
+    public String getCounter() {
+        return counter;
+    }
+
+    public void setCounter(String counter) {
+        this.counter = counter;
     }
 
     @JsonAnyGetter

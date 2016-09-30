@@ -1,7 +1,11 @@
 package com.proschoolonline.view;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -12,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -29,6 +34,7 @@ import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
@@ -37,6 +43,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.text.DateFormatSymbols;
+import java.util.List;
 
 @EActivity(R.layout.activity_details)
 public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGetter*/ {
@@ -64,6 +71,9 @@ public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGe
 
     @ViewById(R.id.tvNewsCategory)
     AppTextView tvNewsCategory;
+
+    @ViewById(R.id.tvPeopleRead)
+    AppTextView tvPeopleRead;
 
     /*@ViewById(R.id.tvNewsAdmin)
     AppTextView tvNewsAdmin;
@@ -103,6 +113,12 @@ public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGe
 
         //tvDescDetail.setMovementMethod(LinkMovementMethod.getInstance());
         tvTitleDetail.setText(Html.fromHtml(newsData.getTitle().getRendered()));
+        if (newsData.getCounter() != null){
+            tvPeopleRead.setVisibility(View.VISIBLE);
+            tvPeopleRead.setText(newsData.getCounter()+" people read this article");
+        }else {
+            tvPeopleRead.setVisibility(View.GONE);
+        }
         //tvDescDetail.setText(Html.fromHtml(newsData.getContent().getRendered().replaceAll("<img.+?>", "")));
 
         //tvDescDetail.setText(Html.fromHtml(newsData.getContent().getRendered().replaceFirst("<img.+?>", ""), this, new HtmlTagHandler()));
@@ -268,6 +284,79 @@ public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGe
         //SharedPreference.getInstance().storeFavorites(context,SharedInstance.getInstance().getNewsDataList());
         SharedPreference.getInstance().writeToFile(context,SharedInstance.getInstance().getNewsDataList());
     }
+
+    @Click(R.id.imvFacebook)
+    void fbClick(){
+        Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, newsData.getTitle().getRendered());
+        shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, newsData.getLink()+" \n\nvia "+getString(R.string.app_name)+" App");
+
+        PackageManager pm = context.getPackageManager();
+        List<ResolveInfo> activityList = pm.queryIntentActivities(shareIntent, 0);
+        for (final ResolveInfo app : activityList)
+        {
+            if ((app.activityInfo.name).startsWith("com.facebook"))
+            {
+                final ActivityInfo activity = app.activityInfo;
+                final ComponentName name = new ComponentName(activity.applicationInfo.packageName, activity.name);
+                shareIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                shareIntent.setComponent(name);
+                context.startActivity(shareIntent);
+                break;
+            }
+        }
+    }
+
+    @Click(R.id.imvTwitter)
+    void twitterClick(){
+        Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, newsData.getTitle().getRendered());
+        shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, newsData.getLink()+" \n\nvia "+getString(R.string.app_name)+" App");
+
+        PackageManager pm = context.getPackageManager();
+        List<ResolveInfo> activityList = pm.queryIntentActivities(shareIntent, 0);
+        for (final ResolveInfo app : activityList)
+        {
+            if ((app.activityInfo.name).startsWith("com.twitter.android"))
+            {
+                final ActivityInfo activity = app.activityInfo;
+                final ComponentName name = new ComponentName(activity.applicationInfo.packageName, activity.name);
+                shareIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                shareIntent.setComponent(name);
+                context.startActivity(shareIntent);
+                break;
+            }
+        }
+    }
+
+    @Click(R.id.imvWhatsapp)
+    void whatsAppClick(){
+        Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, newsData.getTitle().getRendered());
+        shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, newsData.getLink()+" \n\nvia "+getString(R.string.app_name)+" App");
+
+        PackageManager pm = context.getPackageManager();
+        List<ResolveInfo> activityList = pm.queryIntentActivities(shareIntent, 0);
+        for (final ResolveInfo app : activityList) {
+            if ((app.activityInfo.name).startsWith("com.whatsapp")) {
+                final ActivityInfo activity = app.activityInfo;
+                final ComponentName name = new ComponentName(
+                        activity.applicationInfo.packageName, activity.name);
+                shareIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                shareIntent.setComponent(name);
+                context.startActivity(shareIntent);
+                break;
+            }
+        }
+    }
+
 
    /* @Override
     public Drawable getDrawable(String source) {

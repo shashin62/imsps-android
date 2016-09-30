@@ -50,7 +50,10 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @EActivity(R.layout.activity_main)
 public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, ExpandableListView.OnGroupClickListener,
@@ -346,8 +349,28 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     @Background
     void processNewsDataFilter(String catId){
         Log.v("InsideCategory","processCategoryData--");
-        List<NewsData> weatherData = loginAdapter.getNewsDataFilter(catId);
-        publishResultCategoryFilter(weatherData);
+        List<NewsData> newsDatas = loginAdapter.getNewsDataFilter(catId);
+        Iterator<NewsData> itr = newsDatas.iterator();
+        while (itr.hasNext()) {
+            NewsData newsData = itr.next();
+            if (!newsData.getAcf().toString().contains("visible_in_app=Yes")){
+                itr.remove();
+            }else{
+                if (newsData.getAcf().toString().contains("counter=")){
+                    Matcher m = Pattern.compile(
+                            Pattern.quote("counter=")
+                                    + "(.*?)"
+                                    + Pattern.quote("}")
+                    ).matcher(newsData.getAcf().toString());
+                    while(m.find()){
+                        String match = m.group(1);
+                        newsData.setCounter(match);
+                    }
+                }
+            }
+
+        }
+        publishResultCategoryFilter(newsDatas);
     }
 
     @UiThread
