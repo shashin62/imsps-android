@@ -68,7 +68,7 @@ android {
         DEV {
             manifestPlaceholders =
                     [
-                           // launcherIcon: "@drawable/app_icon",
+                            // launcherIcon: "@drawable/app_icon",
                             appPackage: "com.proschoolonline.mob",
                             appName   : "IMS Proschool"
                     ]
@@ -80,7 +80,7 @@ android {
         UAT {
             manifestPlaceholders =
                     [
-                           // launcherIcon: "@drawable/app_icon",
+                            // launcherIcon: "@drawable/app_icon",
                             appPackage: "com.proschoolonline.mob",
                             appName   : "IMS Proschool"
                     ]
@@ -101,6 +101,7 @@ dependencies {
 
     compile group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
 
+
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     compile 'commons-io:commons-io:2.4'
@@ -114,5 +115,4 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.1'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.mobsandgeeks:android-saripaar:2.0.3'
-
 }

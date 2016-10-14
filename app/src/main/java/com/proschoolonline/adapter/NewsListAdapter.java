@@ -112,7 +112,7 @@ public class NewsListAdapter extends BaseAdapter implements Filterable {
             holder.tvDesc = (ExpandableTextView) convertView.findViewById(R.id.tvNewsDesc);
             holder.ivIcon = (ImageView) convertView.findViewById(R.id.imvNews);
             holder.imvDelete = (ImageView) convertView.findViewById(R.id.imvDelete);
-
+            holder.tvPeopleRead = (AppTextView) convertView.findViewById(R.id.tvPeopleRead);
             convertView.setTag(holder);
         }
         else
@@ -124,7 +124,12 @@ public class NewsListAdapter extends BaseAdapter implements Filterable {
 
         holder.tvTitle.setText(Html.fromHtml(currentListData.getTitle().getRendered()));
         holder.tvDesc.setText(Html.fromHtml(currentListData.getExcerpt().getRendered()));
-
+        if (currentListData.getCounter() != null){
+            holder.tvPeopleRead.setVisibility(View.VISIBLE);
+            holder.tvPeopleRead.setText(currentListData.getCounter()+" people read this article");
+        }else {
+            holder.tvPeopleRead.setVisibility(View.GONE);
+        }
         Document doc = Jsoup.parse(currentListData.getContent().getRendered());
         String imageUrl = "";
         if (doc != null && doc.select("img") != null){
@@ -140,7 +145,7 @@ public class NewsListAdapter extends BaseAdapter implements Filterable {
                     .load(imageUrl)
                     .tag(context)
                     .error(R.drawable.menuimgontainer)
-                    .resize(500,325)
+                    //.resize(500,325)
                     .into(holder.ivIcon);
         }
 
@@ -208,7 +213,7 @@ public class NewsListAdapter extends BaseAdapter implements Filterable {
     }
 
     private class MyViewHolder {
-        AppTextView tvTitle;
+        AppTextView tvTitle,tvPeopleRead;
         ExpandableTextView tvDesc;
         ImageView ivIcon,imvDelete;
     }

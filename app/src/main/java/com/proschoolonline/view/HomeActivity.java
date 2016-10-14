@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
+import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -103,6 +104,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     private ProgressDialog progressDialog;
     public static final String FromMainPage = "main";
     public static final String FromBookmarkPage = "bookmark";
+    private boolean doubleBackToExitPressedOnce;
 
     @UiThread
     void showProgressDialog() {
@@ -114,7 +116,6 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     @AfterViews
     void afterViews() {
         toolbar.setTitleTextColor(Color.WHITE);
-
         // comment this line for menu navigation drawer enable
        // toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.menuicon));
 
@@ -505,6 +506,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     @Click(R.id.textHome)
     void onClickHome(View v){
         setTitle(getString(R.string.latest_posts));
+        if (SharedInstance.getInstance().getNewsDataList() != null)
         if (SharedInstance.getInstance().getNewsDataList().size() > 0) {
             tvSorry.setVisibility(View.GONE);
         }else {
@@ -624,5 +626,24 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         }
         lvNews.setAdapter(new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,arrayList));
     }*/
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        //Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
 
 }

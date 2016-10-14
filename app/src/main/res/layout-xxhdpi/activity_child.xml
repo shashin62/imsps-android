@@ -15,6 +15,18 @@
         android:scaleType="fitXY" />
 
     <com.proschoolonline.components.AppTextView
+        android:id="@+id/tvPeopleRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imvNews"
+        android:layout_toLeftOf="@+id/tvNewsDesc"
+        android:layout_marginTop="7dp"
+        android:textColor="@color/heading_text_color"
+        android:textSize="12sp"
+        android:visibility="gone"
+        customfont:fontName="OpenSans-Regular.ttf" />
+
+    <com.proschoolonline.components.AppTextView
         android:id="@+id/tvNewsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,6 +55,7 @@
         android:layout_height="26dp"
         android:layout_alignParentRight="true"
         android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         android:src="@drawable/delete_icon"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </RelativeLayout>

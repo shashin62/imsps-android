@@ -114,8 +114,10 @@ public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGe
         //tvDescDetail.setMovementMethod(LinkMovementMethod.getInstance());
         tvTitleDetail.setText(Html.fromHtml(newsData.getTitle().getRendered()));
         if (newsData.getCounter() != null){
-            tvPeopleRead.setVisibility(View.VISIBLE);
-            tvPeopleRead.setText(newsData.getCounter()+" people read this article");
+            if (!newsData.getCounter().isEmpty()){
+                tvPeopleRead.setVisibility(View.VISIBLE);
+                tvPeopleRead.setText(newsData.getCounter()+" people read this article");
+            }
         }else {
             tvPeopleRead.setVisibility(View.GONE);
         }

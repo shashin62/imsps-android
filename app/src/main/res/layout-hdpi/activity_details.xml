@@ -181,6 +181,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
                 android:layout_marginRight="8dp"></WebView>
+
+            <fragment android:name="com.proschoolonline.view.FormFragment_"
+                android:id="@+id/form_fragment"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
            <!-- <com.proschoolonline.components.AppTextView
                 android:id="@+id/tvDescDetail"
                 android:layout_width="match_parent"

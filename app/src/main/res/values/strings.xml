@@ -4,7 +4,7 @@
     <string name="bookmark">Bookmark</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="search_hint">Search Post</string>
+    <string name="search_hint">Search Article</string>
     <string name="delete_text">This article will be removed from bookmarks</string>
 
     <!-- TODO: Remove or change this placeholder text -->
