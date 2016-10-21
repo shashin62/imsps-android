@@ -23,6 +23,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.proschoolonline.adapter.NewsListAdapter;
 import com.proschoolonline.application.DataFetchApplication;
 import com.proschoolonline.application.SharedInstance;
 import com.proschoolonline.application.SharedPreference;
@@ -30,6 +31,7 @@ import com.proschoolonline.components.AppTextView;
 import com.proschoolonline.mob.R;
 import com.proschoolonline.model.CategoriesData;
 import com.proschoolonline.model.NewsData;
+import com.proschoolonline.utilities.NestedListView;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
@@ -37,13 +39,17 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.text.DateFormatSymbols;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @EActivity(R.layout.activity_details)
 public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGetter*/ {
@@ -75,6 +81,12 @@ public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGe
     @ViewById(R.id.tvPeopleRead)
     AppTextView tvPeopleRead;
 
+    @ViewById(R.id.tvRelatedArticles)
+    AppTextView tvRelatedArticles;
+
+    @ViewById(R.id.lvNewsDetail)
+    NestedListView lvNewsDetail;
+
     /*@ViewById(R.id.tvNewsAdmin)
     AppTextView tvNewsAdmin;
 
@@ -89,6 +101,8 @@ public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGe
 
     private Context context = this;
     private boolean flag;
+    NewsListAdapter newsListAdapterAll;
+    public static final String FromMainPage = "main";
 
     @AfterViews
     void initViews(){
@@ -116,7 +130,11 @@ public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGe
         if (newsData.getCounter() != null){
             if (!newsData.getCounter().isEmpty()){
                 tvPeopleRead.setVisibility(View.VISIBLE);
-                tvPeopleRead.setText(newsData.getCounter()+" people read this article");
+                if (newsData.getCounter().contains(",")){
+                    tvPeopleRead.setText(newsData.getCounter().substring(0,newsData.getCounter().indexOf(","))+" people read this article");
+                }else
+                    tvPeopleRead.setText(newsData.getCounter()+" people read this article");
+
             }
         }else {
             tvPeopleRead.setVisibility(View.GONE);
@@ -196,7 +214,63 @@ public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGe
                     //.resize(800,325)
                     .into(imvNewsDetail);
         }
+
+        showRelatedArticles();
+
     }
+
+    private void showRelatedArticles() {
+
+        List<NewsData> newsFilterList = new ArrayList<>();
+        for (NewsData newsData : SharedInstance.getInstance().getNewsDataList()) {
+            for (Integer catIntegerMain : this.newsData.getCategories()) {
+                for (Integer catInteger : newsData.getCategories()) {
+                    if (catIntegerMain.intValue() == catInteger.intValue() && this.newsData.getId().intValue() != newsData.getId().intValue()) {
+                        Log.v("DataDetails", newsData.getTitle().getRendered() + "<----");
+                        newsFilterList.add(newsData);
+                    }
+                }
+            }
+        }
+
+        Set<NewsData> hs = new LinkedHashSet<>();
+        hs.addAll(newsFilterList);
+        newsFilterList.clear();
+        newsFilterList.addAll(hs);
+
+        if (newsFilterList.size() > 5)
+            newsFilterList.subList(5, newsFilterList.size()).clear();
+        if (newsFilterList.size() > 0) {
+            tvRelatedArticles.setVisibility(View.VISIBLE);
+            lvNewsDetail.setVisibility(View.VISIBLE);
+            newsListAdapterAll = new NewsListAdapter(context, newsFilterList, FromMainPage);
+            lvNewsDetail.setAdapter(newsListAdapterAll);
+        }else {
+            tvRelatedArticles.setVisibility(View.GONE);
+            lvNewsDetail.setVisibility(View.GONE);
+
+        }
+    }
+
+
+    @ItemClick(R.id.lvNewsDetail)
+    void handlesListSelection(int position) {
+
+        Intent intent = new Intent(context,DetailsActivity_.class);
+        if (newsListAdapterAll != null && newsListAdapterAll.getItem(position) != null){
+            if (SharedInstance.getInstance().getNewsDataList() != null && SharedInstance.getInstance().getNewsDataList().size() > 0){
+                for (NewsData newsDataOld : SharedInstance.getInstance().getNewsDataList()){
+                    if (newsListAdapterAll.getItem(position).getId().intValue() == newsDataOld.getId().intValue()){
+                        newsListAdapterAll.getItem(position).setBookmarked(newsDataOld.isBookmarked());
+                    }
+                }
+            }
+            Log.v("ItemDetail",position+"---"+newsListAdapterAll.getItem(position).getTitle().getRendered()+"---"+newsListAdapterAll.getItem(position).isBookmarked());
+            intent.putExtra("detail_data",newsListAdapterAll.getItem(position));
+        }
+        startActivity(intent);
+    }
+
 
     public static String getMonth(int month) {
 

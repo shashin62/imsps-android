@@ -126,7 +126,10 @@ public class NewsListAdapter extends BaseAdapter implements Filterable {
         holder.tvDesc.setText(Html.fromHtml(currentListData.getExcerpt().getRendered()));
         if (currentListData.getCounter() != null){
             holder.tvPeopleRead.setVisibility(View.VISIBLE);
-            holder.tvPeopleRead.setText(currentListData.getCounter()+" people read this article");
+            if (currentListData.getCounter().contains(",")){
+                holder.tvPeopleRead.setText(currentListData.getCounter().substring(0,currentListData.getCounter().indexOf(","))+" people read this article");
+            }else
+                holder.tvPeopleRead.setText(currentListData.getCounter()+" people read this article");
         }else {
             holder.tvPeopleRead.setVisibility(View.GONE);
         }

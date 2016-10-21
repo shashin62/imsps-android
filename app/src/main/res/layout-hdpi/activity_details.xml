@@ -4,8 +4,8 @@
     xmlns:customfont="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -18,7 +18,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="none">
 
         <LinearLayout
@@ -127,6 +127,7 @@
                      customfont:fontName="OpenSans-Regular.ttf" />-->
 
             </LinearLayout>
+
             <com.proschoolonline.components.AppTextView
                 android:id="@+id/tvPeopleRead"
                 android:layout_width="match_parent"
@@ -143,9 +144,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:paddingBottom="7dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:paddingBottom="7dp"
                 android:paddingTop="7dp">
 
                 <ImageView
@@ -175,6 +176,7 @@
                     android:src="@drawable/ic_whatsapp" />
 
             </LinearLayout>
+
             <WebView
                 android:id="@+id/webview"
                 android:layout_width="match_parent"
@@ -182,22 +184,46 @@
                 android:layout_marginLeft="7dp"
                 android:layout_marginRight="8dp"></WebView>
 
-            <fragment android:name="com.proschoolonline.view.FormFragment_"
+            <fragment
                 android:id="@+id/form_fragment"
+                android:name="com.proschoolonline.view.FormFragment_"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="7dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="7dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-           <!-- <com.proschoolonline.components.AppTextView
-                android:id="@+id/tvDescDetail"
+                android:layout_marginTop="7dp" />
+
+            <com.proschoolonline.components.AppTextView
+                android:id="@+id/tvRelatedArticles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:textColor="@color/text_color"
-                android:textSize="9sp"
-                customfont:fontName="OpenSans-Regular.ttf" />-->
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="7dp"
+                android:text="@string/related"
+                android:textColor="@color/heading_text_color"
+                android:textSize="13sp"
+                customfont:fontName="OpenSans-Semibold.ttf" />
+
+            <com.proschoolonline.utilities.NestedListView
+                android:id="@+id/lvNewsDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/white"
+                android:dividerHeight="10dp"
+                android:paddingBottom="7dp"
+                android:paddingTop="7dp"
+                android:scrollbars="none"></com.proschoolonline.utilities.NestedListView>
+            <!-- <com.proschoolonline.components.AppTextView
+                 android:id="@+id/tvDescDetail"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:padding="8dp"
+                 android:textColor="@color/text_color"
+                 android:textSize="9sp"
+                 customfont:fontName="OpenSans-Regular.ttf" />-->
 
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

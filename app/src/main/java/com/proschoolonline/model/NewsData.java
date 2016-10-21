@@ -551,4 +551,16 @@ public class NewsData implements Serializable {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        NewsData other=(NewsData) obj;
+        return this.id==other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+
 }
