@@ -22,5 +22,6 @@ public class Constants {
 	public static final int NEWS_FILTER = 3;
 
 	public static final String ACCEPT = "application/json";
+	public static final String CHAT_KEY = "4E9mpvfSvlalwg1kFxNangnyXM9JvSoF";
 
 	}

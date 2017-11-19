@@ -117,5 +117,14 @@
             </LinearLayout>
         </ScrollView>
     </android.support.v4.widget.DrawerLayout>
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/menu_bar_color"
+        android:scaleType="center"
+        android:src="@drawable/ic_group_chat" />
 </RelativeLayout>

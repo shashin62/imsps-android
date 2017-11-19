@@ -33,6 +33,9 @@ import com.proschoolonline.model.CategoriesData;
 import com.proschoolonline.model.NewsData;
 import com.proschoolonline.utilities.NestedListView;
 import com.squareup.picasso.Picasso;
+import com.zopim.android.sdk.api.ZopimChat;
+import com.zopim.android.sdk.model.VisitorInfo;
+import com.zopim.android.sdk.prechat.ZopimChatActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -50,6 +53,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.proschoolonline.services.Constants.CHAT_KEY;
 
 @EActivity(R.layout.activity_details)
 public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGetter*/ {
@@ -121,6 +126,14 @@ public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGe
         }
         setDetailsData();
 
+        ZopimChat.init(CHAT_KEY);
+        VisitorInfo visitorData = new VisitorInfo.Builder()
+                /*.name("Visitor name")
+                .email("visitor@example.com")
+                .phoneNumber("0123456789")*/
+                .build();
+
+        ZopimChat.setVisitorInfo(visitorData);
     }
 
     private void setDetailsData() {
@@ -431,6 +444,11 @@ public class DetailsActivity extends AppCompatActivity /*implements Html.ImageGe
                 break;
             }
         }
+    }
+
+    @Click(R.id.fab)
+    void onClickFab(){
+        startActivity(new Intent(DetailsActivity.this, ZopimChatActivity.class));
     }
 
 

@@ -12,4 +12,6 @@
     <color name="paragraph_color">#666666</color>
     <color name="menu_bar_color">#2486ac</color>
     <color name="hint_register">#42000000</color>
+    <color name="form_background">#50E3E4E6</color>
+
 </resources>

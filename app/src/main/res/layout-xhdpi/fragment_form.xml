@@ -6,102 +6,142 @@
     android:orientation="vertical"
     tools:context="com.proschoolonline.view.FormFragment">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_name"
+    <com.proschoolonline.components.AppEditText
+        android:id="@+id/edtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textColorHint="@color/hint_register">
+        android:backgroundTint="@color/hint_register"
+        android:hint="@string/firstname"
+        android:inputType="text"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:padding="12dp"
+        android:background="@drawable/rounded_corner"
+        customfont:fontName="OpenSans-Regular.ttf" />
 
-        <com.proschoolonline.components.AppEditText
-            android:id="@+id/edtName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/firstname"
-            android:inputType="text"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:backgroundTint="@color/hint_register"
-            customfont:fontName="OpenSans-Regular.ttf" />
-    </android.support.design.widget.TextInputLayout>
+    <!-- <android.support.design.widget.TextInputLayout
+         android:id="@+id/input_layout_name"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:textColorHint="@color/hint_register"
+         android:layout_margin="5dp"
+         android:background="@color/form_background" >
 
-    <android.support.design.widget.TextInputLayout
+
+     </android.support.design.widget.TextInputLayout>-->
+
+    <com.proschoolonline.components.AppEditText
+        android:id="@+id/edtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/hint_register"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:padding="12dp"
+        android:background="@drawable/rounded_corner"
+        customfont:fontName="OpenSans-Regular.ttf" />
+
+    <!--<android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvRegister"
-        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:background="@color/form_background"
         android:textColorHint="@color/hint_register">
 
-        <com.proschoolonline.components.AppEditText
-            android:id="@+id/edtEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:backgroundTint="@color/hint_register"
-            customfont:fontName="OpenSans-Regular.ttf" />
-    </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    </android.support.design.widget.TextInputLayout>-->
+
+    <com.proschoolonline.components.AppEditText
+        android:id="@+id/edtPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/hint_register"
+        android:digits="0123456789"
+        android:hint="@string/phone"
+        android:inputType="phone"
+        android:maxLength="10"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:padding="12dp"
+        android:background="@drawable/rounded_corner"
+        customfont:fontName="OpenSans-Regular.ttf" />
+
+    <!--<android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:background="@color/form_background"
         android:textColorHint="@color/hint_register">
 
-        <com.proschoolonline.components.AppEditText
-            android:id="@+id/edtPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:digits="0123456789"
-            android:hint="@string/phone"
-            android:inputType="phone"
-            android:maxLength="10"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:backgroundTint="@color/hint_register"
-            customfont:fontName="OpenSans-Regular.ttf" />
-    </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_city"
+    </android.support.design.widget.TextInputLayout>-->
+
+    <com.proschoolonline.components.AppEditText
+        android:id="@+id/edtCity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textColorHint="@color/hint_register">
+        android:backgroundTint="@color/hint_register"
+        android:hint="@string/city"
+        android:inputType="text"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:padding="12dp"
+        android:background="@drawable/rounded_corner"
+        customfont:fontName="OpenSans-Regular.ttf" />
 
-        <com.proschoolonline.components.AppEditText
-            android:id="@+id/edtCity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/city"
-            android:inputType="text"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:backgroundTint="@color/hint_register"
-            customfont:fontName="OpenSans-Regular.ttf" />
-    </android.support.design.widget.TextInputLayout>
+    <!-- <android.support.design.widget.TextInputLayout
+         android:id="@+id/input_layout_city"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_margin="5dp"
+         android:background="@color/form_background"
+         android:textColorHint="@color/hint_register">
+
+
+     </android.support.design.widget.TextInputLayout>-->
 
     <com.proschoolonline.components.AppButton
         android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/submit"
         android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_corner_btn"
         customfont:fontName="OpenSans-Semibold.ttf" />
 
 </LinearLayout>

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,7 +44,7 @@ import javax.net.ssl.HttpsURLConnection;
 @EFragment(R.layout.fragment_form)
 public class FormFragment extends Fragment implements Validator.ValidationListener{
 
-    @ViewById(R.id.input_layout_email)
+    /*@ViewById(R.id.input_layout_email)
     TextInputLayout input_layout_email;
 
     @ViewById(R.id.input_layout_phone)
@@ -55,7 +54,7 @@ public class FormFragment extends Fragment implements Validator.ValidationListen
     TextInputLayout input_layout_name;
 
     @ViewById(R.id.input_layout_city)
-    TextInputLayout input_layout_city;
+    TextInputLayout input_layout_city;*/
 
     @NotEmpty
     @Email

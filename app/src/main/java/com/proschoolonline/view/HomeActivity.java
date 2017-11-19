@@ -36,6 +36,9 @@ import com.proschoolonline.mob.R;
 import com.proschoolonline.model.CategoriesData;
 import com.proschoolonline.model.NewsData;
 import com.proschoolonline.utilities.AlarmReceiver_;
+import com.zopim.android.sdk.api.ZopimChat;
+import com.zopim.android.sdk.model.VisitorInfo;
+import com.zopim.android.sdk.prechat.ZopimChatActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -55,6 +58,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.proschoolonline.services.Constants.CHAT_KEY;
 
 @EActivity(R.layout.activity_main)
 public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, ExpandableListView.OnGroupClickListener,
@@ -161,6 +166,15 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         }else{
             showProgressDialog();
         }
+
+        ZopimChat.init(CHAT_KEY);
+        VisitorInfo visitorData = new VisitorInfo.Builder()
+                /*.name("Visitor name")
+                .email("visitor@example.com")
+                .phoneNumber("0123456789")*/
+                .build();
+
+        ZopimChat.setVisitorInfo(visitorData);
     }
 
     public void loadData(){
@@ -646,4 +660,8 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         }, 2000);
     }
 
+    @Click(R.id.fab)
+    void onClickFab(){
+        startActivity(new Intent(HomeActivity.this, ZopimChatActivity.class));
+    }
 }

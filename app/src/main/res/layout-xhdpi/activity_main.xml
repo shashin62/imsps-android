@@ -14,13 +14,13 @@
         android:minHeight="?attr/actionBarSize"
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp">
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:scaleType="fitCenter"
             android:adjustViewBounds="true"
-            android:src="@drawable/proschool"
-            />
+            android:scaleType="fitCenter"
+            android:src="@drawable/proschool" />
     </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.DrawerLayout
@@ -119,4 +119,14 @@
         </ScrollView>
     </android.support.v4.widget.DrawerLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:scaleType="center"
+        android:src="@drawable/ic_group_chat"
+        app:backgroundTint="@color/menu_bar_color" />
 </RelativeLayout>
